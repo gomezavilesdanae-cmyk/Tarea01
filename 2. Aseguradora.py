@@ -204,7 +204,7 @@ if __name__ == "__main__":
         resultados = calculadora.calcular_prima(cliente_datos)
         
         asegurados.append({
-            "datos": clientes_datos,
+            "datos": cliente_datos,
             "resultados": resultados})
         primas.append(resultados["prima_mxn"])
         
