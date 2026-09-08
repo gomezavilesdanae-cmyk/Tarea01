@@ -205,7 +205,8 @@ if __name__ == "__main__":
         
         asegurados.append({
             "datos": cliente_datos,
-            "resultados": resultados})
+            "resultados": resultados
+        })
         primas.append(resultados["prima_mxn"])
         
     # Estadísticas
