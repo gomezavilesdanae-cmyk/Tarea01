@@ -90,7 +90,7 @@ class Datos:
 # Conversión de moneda 
 # Principio: Single Resonsibility Principle (SRP) 
 class TasaCambioInvalidaError(Exception):
-    def __init__(self, mensaje="La tasa de cambio deber ser un número positivo mayor a cero"):
+    def __init__(self, mensaje="La tasa de cambio debe ser un número positivo mayor a cero"):
         super().__init__(mensaje)
 
 class ConversorMoneda:
@@ -102,10 +102,10 @@ class ConversorMoneda:
     def mxn_a_usd(self, monto_mxn: float) -> float:
         return monto_mxn / self.tasa_cambio
 
-#Jerarquía de clases para factor de edad
-#Principio: Open/Closed Principle (OCP)
+# Jerarquía de clases para factor de edad
+# Principio: Open/Closed Principle (OCP)
 class FactorEdadStrategy (ABC):
-    """Clase abstracta que define el contrato para obtener el factor de edad."""
+    """Clase abstracta que define el contrato para obtener el factor de edad"""
     @abstractmethod 
     def obtener_factor(self, edad_ajustada: int) -> float:
         pass
@@ -134,8 +134,7 @@ class FactorMasculino(FactorEdadStrategy):
             return 3.0 
         return 2.0
 
-#Calculadora principal del seguro 
-
+# Calculadora principal del seguro 
 class CalculadoraSeguro:
     def __init__(self, conversor: ConversorMoneda = None):
         # Inyección de dependencias (Si no le pasamos conversor, crea uno por defecto)
@@ -187,22 +186,33 @@ class CalculadoraSeguro:
             "prima_usd": round(prima_usd, 2)
         }
 
-# Pruebita
+# Programa principal
 if __name__ == "__main__":
-    # 1. Módulo del Integrante 1
-    capturador = Datos() 
-    cliente_datos = capturador.recolectar_datos() 
     
-    # 2. Módulo de Integrante 2 (TU PARTE)
+    #Entrada de datos
+    capturador = Datos()
     calculadora = CalculadoraSeguro()
-    resultados = calculadora.calcular_prima(cliente_datos)
+    asegurados = []
+    primas = []
+    n = int(input("¿Cuántos asegurados desea registrar?: "))
     
-    # 3. Imprimir para verificar
-    print("\n--- RESULTADOS DEL CÁLCULO ---")
-    print(f"Edad ajustada: {resultados['edad_ajustada']}")
-    print(f"Factor aplicado (K): {resultados['factor_k']}")
-    print(f"Prima a pagar (MXN): ${resultados['prima_mxn']:,.2f}")
-    print(f"Prima a pagar (USD): ${resultados['prima_usd']:,.2f}")
+    # Procesamiento
+    for i in range(n):
+        print(f"\n--- Asegurado {i+1} ---")
+        cliente_datos = capturador.recolectar_datos()
+        resultados = calculadora.calcular_prima(cliente_datos)
         
+        asegurados.append({
+            "datos": clientes_datos,
+            "resultados": resultados})
+        primas.append(resultados["prima_mxn"])
+        
+    # Estadísticas
+    promedio = sum(primas) / len(primas)
+    maxima = max(primas)
+    minima = min(primas)
+    print("\n---Estadísticas---")
+    print(f"Prima promedio: ${promedio:,.2f}")
+    
         
     
