@@ -236,7 +236,7 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Error al guardar el archivo:{e}")
 
-#Notas
+#Nota
 #Prima extra solo se definió como indicador si/no por lo que no existe un valor numérico para determinar la prima extra más alta
             
 
