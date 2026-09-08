@@ -226,16 +226,18 @@ if __name__ == "__main__":
 
                 datos = asegurado["datos"]
                 resultado = asegurado["resultados"]
-                archivo.write(f"Asegurado {i}\n")
-                archivo.write(f"Edad: {datos['edad']}\n")
-                archivo.write(f"Sexo: {datos['sexo']}\n")
-                archivo.write(f"Prima MXN: {resultado['prima_mxn']}\n")
-                archivo.write(f"Prima USD: {resultado['prima_usd']}\n\n")
+                reporte.write(f"Asegurado {i}\n")
+                reporte.write(f"Edad: {datos['edad']}\n")
+                reporte.write(f"Sexo: {datos['sexo']}\n")
+                reporte.write(f"Prima MXN: {resultado['prima_mxn']}\n")
+                reporte.write(f"Prima USD: {resultado['prima_usd']}\n\n")
             print("\nArchivo generado correctamente")
             
     except Exception as e:
         print(f"Error al guardar el archivo:{e}")
-        
+
+#Notas
+#Prima extra solo se definió como indicador si/no por lo que no existe un valor numérico para determinar la prima extra más alta
             
 
 
