@@ -216,6 +216,13 @@ if __name__ == "__main__":
     print(f"Prima promedio: ${promedio:,.2f}")
     print(f"Prima máxima: ${maxima:,.2f}")
     print(f"Prima mínima: ${minima:,.2f}")
+    try:
+        with open ("reporte_asegurados.txt", "w", encoding="utf-8") as archivo:
+            archivo.write("Reporte de asegurados\n\n")
+
+
+
+
     
         
     
