@@ -199,7 +199,7 @@ if __name__ == "__main__":
     
     # Procesamiento
     for i in range(n):
-        print(f"\n--- Asegurado {i+1} ---")
+        print(f"\nAsegurado {i+1}")
         cliente_datos = capturador.recolectar_datos()
         resultados = calculadora.calcular_prima(cliente_datos)
         
@@ -213,15 +213,15 @@ if __name__ == "__main__":
     promedio = sum(primas) / len(primas)
     maxima = max(primas)
     minima = min(primas)
-    print("\n---Estadísticas---")
+    print("\nEstadísticas")
     print(f"Prima promedio: ${promedio:,.2f}")
     print(f"Prima máxima: ${maxima:,.2f}")
     print(f"Prima mínima: ${minima:,.2f}")
 
     #Guardae resultados en archivo
     try:
-        with open ("reporte_asegurados.txt", "w", encoding="utf-8") as archivo:
-            archivo.write("Reporte de asegurados\n\n")
+        with open ("reporte_asegurados.txt", "w", encoding="utf-8") as reporte:
+            reporte.write("Reporte de asegurados\n\n")
             for i, asegurado in enumerate(asegurados, start=1):
 
                 datos = asegurado["datos"]
