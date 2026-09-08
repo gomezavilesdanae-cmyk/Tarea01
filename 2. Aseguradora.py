@@ -219,6 +219,19 @@ if __name__ == "__main__":
     try:
         with open ("reporte_asegurados.txt", "w", encoding="utf-8") as archivo:
             archivo.write("Reporte de asegurados\n\n")
+            for i, asegurado in enumerate(asegurados, start=1):
+
+                datos = asegurado["datos"]
+                resultado = asegurado["resultados"]
+                archivo.write(f"Asegurado {i}\n")
+                archivo.write(f"Edad: {datos['edad']}\n")
+                archivo.write(f"Sexo: {datos['sexo']}\n")
+                archivo.write(f"Prima MXN: {resultado['prima_mxn']}\n")
+                archivo.write(f"Prima USD: {resultado['prima_usd']}\n\n")
+            print("\nArchivo generado correctamente")
+            
+
+
 
 
 
