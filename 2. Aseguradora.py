@@ -140,7 +140,7 @@ class CalculadoraSeguro:
     def __init__(self, conversor: ConversorMoneda = None):
         # Inyección de dependencias (Si no le pasamos conversor, crea uno por defecto)
         self.conversor = conversor if conversor else ConversorMoneda()
-    def _calcular_edad_ajustada(self, edad: int, sexo: str, fumador:
+    def _calcular_edad_ajustada(self, edad: int, sexo: str, fumador: str, extra_prima: str):
         """Calcula la edad ajustada aplicando las reglas de negocio."""
         edad_ajustada = edad
         
