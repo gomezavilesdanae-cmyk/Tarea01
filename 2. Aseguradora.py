@@ -99,8 +99,8 @@ class ConversorMoneda:
         if tasa_cambio <=0:
             raise TasaCambioInvalidaError()
         self.tasa_cambio = tasa_cambio 
-    def mxm_a_usd(self, monto_mxm: float) -> float:
-        return monto_mxm / self.tasa_cambio
+    def mxn_a_usd(self, monto_mxn: float) -> float:
+        return monto_mxn / self.tasa_cambio
 
 #Jerarquía de clases para factor de edad
 #Principio: Open/Closed Principle (OCP)
