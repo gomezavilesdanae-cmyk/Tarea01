@@ -22,6 +22,7 @@ class SumaAseguradaInvalidaError(Exception):
 class OpcionInvalidaError(Exception):
     def __init__(self, mensaje="La opción ingresada debe ser 'Si' o 'No'."):
         super().__init__(mensaje)
+        
 
 
 # Clase para capturar y validar los datos del asegurado
@@ -213,6 +214,8 @@ if __name__ == "__main__":
     minima = min(primas)
     print("\n---Estadísticas---")
     print(f"Prima promedio: ${promedio:,.2f}")
+    print(f"Prima máxima: ${maxima:,.2f}")
+    print(f"Prima mínima: ${minima:,.2f}")
     
         
     
