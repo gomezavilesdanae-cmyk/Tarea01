@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 # 2. Aseguradora
 # 1. Validación Robusta
 
@@ -85,11 +87,122 @@ class Datos:
             "extra_prima": extra_prima
         }
 
+# Conversión de moneda 
+# Principio: Single Resonsibility Principle (SRP) 
+class TasaCambioInvalidaError(Exception):
+    def __init__(self, mensaje="La tasa de cambio deber ser un número positivo mayor a cero"):
+        super().__init__(mensaje)
 
-# Programa
+class ConversorMoneda:
+    """Clase independiente para manejar la conversión de divisas, desacoplada del cálculo de seguros."""
+    def __init__(self, tasa_cambio: float = 21.13):
+        if tasa_cambio <=0:
+            raise TasaCambioInvalidaError()
+        self.tasa_cambio = tasa_cambio 
+    def mxm_a_usd(self, monto_mxm: float) -> float:
+        return monto_mxm / self.tasa_cambio
+
+#Jerarquía de clases para factor de edad
+#Principio: Open/Closed Principle (OCP)
+class FactorEdadStrategy (ABC):
+    """Clase abstracta que define el contrato para obtener el factor de edad."""
+    @abstractmethod 
+    def obtener_factor(self, edad_ajustada: int) -> float:
+        pass
+        
+class FactorFemenino(FactorEdadStrategy):
+    def obtener_factor(self, edad_ajustada: int) -> float:
+        if 18 <= edad_ajustada < 25:
+            return 1.5 
+        elif 25 <= edad_ajustada < 45:
+            return 1.7 
+        elif 45 <= edad_ajustada < 65:
+            return 2.0
+        elif 65 <= edad_ajustada <=99:
+            return 2.2 
+        return 1.5
+
+class FctorMasculino(FactorEdadStrategy):
+    def obtener_factor(self, edad_ajustada: int) -> float:
+        if 18 <= edad_ajustada < 25:
+            return 2.0 
+        elif 25 <= edad_ajustada < 45:
+            return 2.3
+        elif 45 <= edad_ajustada < 65:
+            return 2.5
+        elif 65 <= edad_ajustada <=99:
+            return 3.0 
+        return 2.0
+
+#Calculadora principal del seguro 
+
+class CalculadoraSeguro:
+    def __init__(self, conversor: ConversorMoneda = None):
+        # Inyección de dependencias (Si no le pasamos conversor, crea uno por defecto)
+        self.conversor = conversor if conversor else ConversorMoneda()
+    def _calcular_edad_ajustada(self, edad: int, sexo: str, fumador:
+        """Calcula la edad ajustada aplicando las reglas de negocio."""
+        edad_ajustada = edad
+        
+        if fumador in ['No', 'NO']:
+            edad_ajustada -= 5
+        if sexo == 'F':
+            edad_ajustada -= 10
+        if extra_prima in ['Si', 'Sí', 'SI']:
+            edad_ajustada += 10
+            
+        # Restricción: La edad ajustada nunca puede salir del rango [18, 99]
+        return max(18, min(edad_ajustada, 99))
+    def calcular_prima(self, datos_cliente: dict) -> dict:
+        """Recibe el diccionario y devuelve los resultados"""
+        # 1. Obtener la edad ajustada
+        edad_ajustada = self._calcular_edad_ajustada(
+            datos_cliente['edad'],
+            datos_cliente['sexo'],
+            datos_cliente['fumador'],
+            datos_cliente['extra_prima']
+        )
+        
+        # 2. Seleccionar la estrategia adecuada (Open/Closed)
+        if datos_cliente['sexo'] == 'F':
+            estrategia_factor = FactorFemenino()
+        else:
+            estrategia_factor = FactorMasculino()
+            
+        # 3. Obtener el factor K
+        k = estrategia_factor.obtener_factor(edad_ajustada)
+        
+        # 4. Calcular Prima Anual: P = (SA * K) / 1000
+        sa = datos_cliente['suma_asegurada']
+        prima_mxn = (sa * k) / 1000
+        
+        # 5. Convertir a dólares usando la clase independiente
+        prima_usd = self.conversor.mxn_a_usd(prima_mxn)
+        
+        return {
+            "edad_original": datos_cliente['edad'],
+            "edad_ajustada": edad_ajustada,
+            "factor_k": k,
+            "prima_mxn": round(prima_mxn, 2),
+            "prima_usd": round(prima_usd, 2)
+        }
+
+# Pruebita
 if __name__ == "__main__":
-    capturador = Datos()
-    cliente = capturador.recolectar_datos()
-
-    print("Los datos han sido capturados.")
-    print(cliente)
+    # 1. Módulo del Integrante 1
+    capturador = Datos() 
+    cliente_datos = capturador.recolectar_datos() 
+    
+    # 2. Módulo de Integrante 2 (TU PARTE)
+    calculadora = CalculadoraSeguro()
+    resultados = calculadora.calcular_prima(cliente_datos)
+    
+    # 3. Imprimir para verificar
+    print("\n--- RESULTADOS DEL CÁLCULO ---")
+    print(f"Edad ajustada: {resultados['edad_ajustada']}")
+    print(f"Factor aplicado (K): {resultados['factor_k']}")
+    print(f"Prima a pagar (MXN): ${resultados['prima_mxn']:,.2f}")
+    print(f"Prima a pagar (USD): ${resultados['prima_usd']:,.2f}")
+        
+        
+    
