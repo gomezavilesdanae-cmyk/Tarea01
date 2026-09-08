@@ -216,6 +216,8 @@ if __name__ == "__main__":
     print(f"Prima promedio: ${promedio:,.2f}")
     print(f"Prima máxima: ${maxima:,.2f}")
     print(f"Prima mínima: ${minima:,.2f}")
+
+    #Guardae resultados en archivo
     try:
         with open ("reporte_asegurados.txt", "w", encoding="utf-8") as archivo:
             archivo.write("Reporte de asegurados\n\n")
@@ -229,6 +231,10 @@ if __name__ == "__main__":
                 archivo.write(f"Prima MXN: {resultado['prima_mxn']}\n")
                 archivo.write(f"Prima USD: {resultado['prima_usd']}\n\n")
             print("\nArchivo generado correctamente")
+            
+    except Exception as e:
+        print(f"Error al guardar el archivo:{e}")
+        
             
 
 
