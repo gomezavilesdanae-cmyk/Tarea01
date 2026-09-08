@@ -122,7 +122,7 @@ class FactorFemenino(FactorEdadStrategy):
             return 2.2 
         return 1.5
 
-class FctorMasculino(FactorEdadStrategy):
+class FactorMasculino(FactorEdadStrategy):
     def obtener_factor(self, edad_ajustada: int) -> float:
         if 18 <= edad_ajustada < 25:
             return 2.0 
