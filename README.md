@@ -1,5 +1,10 @@
-# Tarea01
-Primer Tarea del curso de Manejo de Datos 
+EQUIPO: EL REAL MAIZ
+Integrantes:
+Gómez Avilés Danae
+Padilla Benítez Zuemi Alejandra
+González González Jennifer
+Sánchez Nutes Sakti Sarai
+
 
 
 
