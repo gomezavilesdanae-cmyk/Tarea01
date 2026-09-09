@@ -1,4 +1,4 @@
-EQUIPO: EL REAL MAIZ
+## EQUIPO: EL REAL MAIZ
 * Integrantes:
 * Gómez Avilés Danae
 * González González Jennifer 
