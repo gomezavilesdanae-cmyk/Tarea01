@@ -6,7 +6,7 @@ EQUIPO: EL REAL MAIZ
 * Sánchez Nutes Sakti Sarai
 
 
-* Ejercicio 2. Aseguradora
+  Ejercicio 2. Aseguradora
 * Diagrama de Clases (UML) : 
 [Diagrama UML de Clases - Aseguradora](Diagrama_UML_Aseguradora.png)
 
