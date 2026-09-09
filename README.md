@@ -7,7 +7,7 @@ EQUIPO: EL REAL MAIZ
 
 
 Ejercicio 2. Aseguradora
-Diagrama de Clases (UML)
+*Diagrama de Clases (UML)
 [Diagrama UML de Clases - Aseguradora](Diagrama_UML_Aseguradora.png)
 
 
