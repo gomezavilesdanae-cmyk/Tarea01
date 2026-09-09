@@ -24,13 +24,3 @@ Sánchez Nutes Sakti Sarai
 
 
 
-
-
-
-
-
-
-
-
-
-# ----- DICCIONARIO ----- #
