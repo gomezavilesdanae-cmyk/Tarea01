@@ -87,6 +87,7 @@ class TablaHashDiccionario:
                 resultado.append(p)
         return resultado
 
+
 # 3. Algoritmos de Ordenamiento (Merge Sort y Quick Sort) 
 def merge_sort(lista):
     if len(lista)<=1:
