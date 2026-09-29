@@ -11,7 +11,11 @@
 
 ### Diagrama de Clases (UML)
 [Diagrama UML de Clases - Aseguradora](Diagrama_UML_Aseguradora.png)
- 
+
+## Ejercicio 3. Diccionario
+
+### Diagrama de Clases (UML)
+[Diagrama UML de Clases - Diccionario](Diagrama_UML_Diccionario.png)
 
 
 
