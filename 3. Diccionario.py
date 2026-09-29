@@ -60,3 +60,7 @@ def mezclar(izquierda, derecha):
     resultado=[]
     i=0
     j=0
+    while i<len(izquierda) and j<len(derecha):
+        if izquierda[i]<=.append(izquierda[i])
+        resultado.append(izquierda[i])
+        i+=1
