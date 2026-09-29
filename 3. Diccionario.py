@@ -136,5 +136,11 @@ def quick_sort(lista):
 
     return quick_sort(menores)+iguales+quick_sort(mayores)
 
+# 4. Conteo de Frecuencia.
+
+
+
+# 5. Comparación empírica.
+
         
         
