@@ -172,6 +172,54 @@ class TablaFrecuencias(TablaHashBase):
 
 
 # 5. Comparación empírica.
+def generar_texto_aleatorio(num_palabras):
+    # Generamos palabras aleatorias para tener cadenas únicas reales y no una lista vacía o de 10 elementos repetidos
+    letras = "abcdefghijklmnopqrstuvwxyz"
+    palabras = []
+    for _ in range(num_palabras):
+        longitud = random.randint(3, 8)
+        palabra = "".join(random.choice(letras) for _ in range(longitud))
+        palabras.append(palabra)
+    return " ".join(palabras)
+
+def comparar_algoritmos():
+    # Se prueban 3 tamaños distintos de palabras como indica el requerimiento[cite: 1]
+    tamanos = [100, 1000, 10000]
+    
+    # Presentación de resultados en una tabla comparativa[cite: 1]
+    print(f"\n{'Palabras Totales':<18} | {'Únicas a ordenar':<18} | {'Merge Sort (s)':<18} | {'Quick Sort (s)':<18}")
+    print("-" * 78)
+    
+    for tamano in tamanos:
+        # Generar, normalizar e insertar
+        texto = generar_texto_aleatorio(tamano)
+        normalizador = NormalizadorTexto()
+        texto_limpio = normalizador.normalizar(texto)
+        
+        # Instanciamos la clase del Punto 4 que cuenta frecuencias
+        tabla = TablaFrecuencias(tamano=tamano) 
+        for palabra in texto_limpio.split():
+            tabla.insertar(palabra)
+            
+        palabras_unicas = tabla.obtener_solo_palabras()
+        total_unicas = len(palabras_unicas)
+        
+        # Copias independientes para no ordenar una lista que ya fue ordenada por el algoritmo anterior
+        lista_merge = palabras_unicas.copy()
+        lista_quick = palabras_unicas.copy()
+        
+        # Medir tiempo de Merge Sort usando el módulo time[cite: 1]
+        inicio = time.time()
+        AlgoritmosOrdenamiento.merge_sort(lista_merge)
+        tiempo_merge = time.time() - inicio
+        
+        # Medir tiempo de Quick Sort usando el módulo time[cite: 1]
+        inicio = time.time()
+        AlgoritmosOrdenamiento.quick_sort(lista_quick)
+        tiempo_quick = time.time() - inicio
+        
+        # Imprimir fila de la tabla
+        print(f"{tamano:<18} | {total_unicas:<18} | {tiempo_merge:<18.6f} | {tiempo_quick:<18.6f}")
 
         
         
