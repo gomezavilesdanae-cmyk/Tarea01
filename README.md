@@ -2,7 +2,7 @@
 ### Integrantes:
 * Gómez Avilés Danae
 * González González Jennifer 
-* Padilla Benítez Zuemi Alejandra
+* Padilla Benitez Zuemi Alejandra
 * Sánchez Nutes Sakti Sarai
 
 -------------------------------------------
