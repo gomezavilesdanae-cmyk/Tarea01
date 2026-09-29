@@ -2,6 +2,7 @@ import random
 import time
 # 3. Diccionario
 
+
 # 1. Normalización de texto: Limpiar el texto de entrada.
 # Creamos la clase excepción por si ingresan un texto vacío
 class TextoVacioError(Exception):
