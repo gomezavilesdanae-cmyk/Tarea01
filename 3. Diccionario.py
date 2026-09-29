@@ -47,3 +47,16 @@ class NormalizadorTexto:
 
         # Regresamos el texto quitando los espacios sobrantes
         return texto_limpio.strip()
+
+def merge_sort(lista):
+    if len(lista)<=1:
+        return lista
+    mitad=len(lista)//2}
+    izquierda=merge_sort(lista[:mitad])
+    derecha=merge_sort(lista[mitad:])
+    return mezclar(izquierda, derecha)
+
+def mezclar(izquierda, derecha):
+    resultado=[]
+    i=0
+    j=0
