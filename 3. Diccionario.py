@@ -1,3 +1,5 @@
+import random
+import time
 # 3. Diccionario
 
 
@@ -8,6 +10,7 @@ class TextoVacioError(Exception):
         self.mensaje = mensaje
         # Usamos super() para pasar el mensaje a la clase padre Exception
         super().__init__(self.mensaje)
+
 
 # Creamos la clase NormalizadorTexto para convertir el texto a minúsculas, quitar acentos, etc.
 class NormalizadorTexto:
@@ -21,12 +24,12 @@ class NormalizadorTexto:
 
         # Creamos un diccionario para modificar las vocales con acento
         acentos_limpio = {'á': 'a', 'à': 'a',
-                      'é': 'e', 'è': 'e',
-                      'í': 'i', 'ì': 'i',
-                      'ó': 'o', 'ò': 'o',
-                      'ú': 'u', 'ù': 'u',
-                      'ü': 'u',
-                      }
+                          'é': 'e', 'è': 'e',
+                          'í': 'i', 'ì': 'i',
+                          'ó': 'o', 'ò': 'o',
+                          'ú': 'u', 'ù': 'u',
+                          'ü': 'u',
+                          }
 
         # Agregamos el abecedario permitido para poder quitar puntuación, símbolos, números, etc.
         abecedario = "abcdefghijklmnñopqrstuvwxyz"
@@ -50,15 +53,9 @@ class NormalizadorTexto:
         return texto_limpio.strip()
 
 
-# 2 y 4. Hash y Frecuencias
-        tabla = TablaFrecuencias() # Usamos la clase hija que incluye ambas funciones
-        for palabra in texto_limpio.split():
-            tabla.insertar(palabra)
-            
-        palabras_extraidas = tabla.obtener_solo_palabras()
 # 2. Eliminación de repetidos con tabla hash propia y 4. Conteo de frecuencia
 class TablaHashBase:
-    def _init_(self, tamano=100):
+    def __init__(self, tamano=100):
         self.tamano = tamano
         # Buckets (listas) para manejar colisiones por encadenamiento
         self.buckets = [[] for _ in range(self.tamano)]
@@ -76,9 +73,9 @@ class TablaHashBase:
         for p in bucket:
             if p == palabra:
                 # Si la palabra ya existe, detenemos la inserción (elimina repetidos)
-                return 
-        
-        # Si no existe en el bucket, la agregamos
+                return
+
+                # Si no existe en el bucket, la agregamos
         bucket.append(palabra)
 
     def obtener_solo_palabras(self):
@@ -89,53 +86,61 @@ class TablaHashBase:
         return resultado
 
 
-# 3. Algoritmos de Ordenamiento (Merge Sort y Quick Sort) 
+# 3. Algoritmos de Ordenamiento (Merge Sort y Quick Sort)
 def merge_sort(lista):
-    if len(lista)<=1:
+    if len(lista) <= 1:
         return lista
-    mitad=len(lista)//2}
-    izquierda=merge_sort(lista[:mitad])
-    derecha=merge_sort(lista[mitad:])
+
+    mitad = len(lista) // 2
+    izquierda = merge_sort(lista[:mitad])
+    derecha = merge_sort(lista[mitad:])
     return mezclar(izquierda, derecha)
 
+
 def mezclar(izquierda, derecha):
-    resultado=[]
-    i=0
-    j=0
-    while i<len(izquierda) and j<len(derecha):
-        if izquierda[i]<=.append(izquierda[i])
+    resultado = []
+    i = 0
+    j = 0
+
+    while i < len(izquierda) and j < len(derecha):
+        if izquierda[i] <= derecha[j]:
             resultado.append(izquierda[i])
-            i+=1
+            i += 1
         else:
             resultado.append(derecha[j])
-            j+=1
-    while i<len(izquierda):
-        resultado.append(izquierda[i])
-        i+=1
+            j += 1
 
-    while j<len(derecha):
+    while i < len(izquierda):
+        resultado.append(izquierda[i])
+        i += 1
+
+    while j < len(derecha):
         resultado.append(derecha[j])
-        j+=1
+        j += 1
+
     return resultado
+
+
 def quick_sort(lista):
-    if len(lista)<=1:
+    if len(lista) <= 1:
         return lista
 
-    pivote=lista[len(lista)//2]
+    pivote = lista[len(lista) // 2]
 
-    menor=[]
-    iguales=[]
-    mayores=[]
+    menores = []
+    iguales = []
+    mayores = []
 
     for palabra in lista:
-        if palabra<pivote:
+        if palabra < pivote:
             menores.append(palabra)
-        elif palabra>pivote:
+        elif palabra > pivote:
             mayores.append(palabra)
         else:
             iguales.append(palabra)
 
-    return quick_sort(menores)+iguales+quick_sort(mayores)
+    return quick_sort(menores) + iguales + quick_sort(mayores)
+
 
 # 4. Conteo de Frecuencia.
 class TablaFrecuencias(TablaHashBase):
@@ -150,7 +155,7 @@ class TablaFrecuencias(TablaHashBase):
                 # Si ya existe, actualizamos su frecuencia sumando 1
                 bucket[i] = (p, freq + 1)
                 return
-        
+
         # Si es una palabra nueva, la agregamos con frecuencia inicial de 1
         bucket.append((palabra, 1))
 
@@ -182,44 +187,49 @@ def generar_texto_aleatorio(num_palabras):
         palabras.append(palabra)
     return " ".join(palabras)
 
+
 def comparar_algoritmos():
-    # Se prueban 3 tamaños distintos de palabras como indica el requerimiento[cite: 1]
+    # Se prueban 3 tamaños distintos de palabras como indica el requerimiento
     tamanos = [100, 1000, 10000]
-    
-    # Presentación de resultados en una tabla comparativa[cite: 1]
+
+    # Presentación de resultados en una tabla comparativa
     print(f"\n{'Palabras Totales':<18} | {'Únicas a ordenar':<18} | {'Merge Sort (s)':<18} | {'Quick Sort (s)':<18}")
     print("-" * 78)
-    
+
     for tamano in tamanos:
         # Generar, normalizar e insertar
         texto = generar_texto_aleatorio(tamano)
         normalizador = NormalizadorTexto()
         texto_limpio = normalizador.normalizar(texto)
-        
+
         # Instanciamos la clase del Punto 4 que cuenta frecuencias
-        tabla = TablaFrecuencias(tamano=tamano) 
+        tabla = TablaFrecuencias(tamano=tamano)
         for palabra in texto_limpio.split():
             tabla.insertar(palabra)
-            
+
         palabras_unicas = tabla.obtener_solo_palabras()
         total_unicas = len(palabras_unicas)
-        
+
         # Copias independientes para no ordenar una lista que ya fue ordenada por el algoritmo anterior
         lista_merge = palabras_unicas.copy()
         lista_quick = palabras_unicas.copy()
-        
-        # Medir tiempo de Merge Sort usando el módulo time[cite: 1]
+
+        # Medir tiempo de Merge Sort usando el módulo time
         inicio = time.time()
-        AlgoritmosOrdenamiento.merge_sort(lista_merge)
+        lista_merge = merge_sort(lista_merge)
         tiempo_merge = time.time() - inicio
-        
-        # Medir tiempo de Quick Sort usando el módulo time[cite: 1]
+
+        # Medir tiempo de Quick Sort usando el módulo time
         inicio = time.time()
-        AlgoritmosOrdenamiento.quick_sort(lista_quick)
+        lista_quick = quick_sort(lista_quick)
         tiempo_quick = time.time() - inicio
-        
+
         # Imprimir fila de la tabla
         print(f"{tamano:<18} | {total_unicas:<18} | {tiempo_merge:<18.6f} | {tiempo_quick:<18.6f}")
+
+
+# Comparamos
+comparar_algoritmos()
 
         
         
