@@ -50,6 +50,12 @@ class NormalizadorTexto:
         return texto_limpio.strip()
 
 
+# 2 y 4. Hash y Frecuencias
+        tabla = TablaFrecuencias() # Usamos la clase hija que incluye ambas funciones
+        for palabra in texto_limpio.split():
+            tabla.insertar(palabra)
+            
+        palabras_extraidas = tabla.obtener_solo_palabras()
 # 2. Eliminación de repetidos con tabla hash propia y 4. Conteo de frecuencia
 class TablaHashBase:
     def _init_(self, tamano=100):
