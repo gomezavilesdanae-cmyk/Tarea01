@@ -75,6 +75,25 @@ def mezclar(izquierda, derecha):
         resultado.append(derecha[j])
         j+=1
     return resultado
+def quick_sort(lista):
+    if len(lista)<=1:
+        return lista
+
+    pivote=lista[len(lista)//2]
+
+    menor=[]
+    iguales=[]
+    mayores=[]
+
+    for palabra in lista:
+        if palabra<pivote:
+            menores.append(palabra)
+        elif palabra>pivote:
+            mayores.append(palabra)
+        else:
+            iguales.append(palabra)
+
+    return quick_sort(menores)+iguales+quick_sort(mayores)
 
         
         
