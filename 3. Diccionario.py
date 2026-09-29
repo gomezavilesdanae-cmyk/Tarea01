@@ -51,13 +51,14 @@ class NormalizadorTexto:
 
 
 # 2. Eliminación de repetidos con tabla hash propia y 4. Conteo de frecuencia
-class TablaHashDiccionario:
-    def __init__(self, tamano=100):
+class TablaHashBase:
+    def _init_(self, tamano=100):
         self.tamano = tamano
         # Buckets (listas) para manejar colisiones por encadenamiento
         self.buckets = [[] for _ in range(self.tamano)]
 
     def _hash(self, palabra):
+        # Función hash simple: suma de valores ASCII módulo el tamaño
         suma = sum(ord(c) for c in palabra)
         return suma % self.tamano
 
@@ -65,25 +66,19 @@ class TablaHashDiccionario:
         indice = self._hash(palabra)
         bucket = self.buckets[indice]
 
-        for i, (p, freq) in enumerate(bucket):
+        # Resolver colisiones iterando en el bucket para detectar repetidos
+        for p in bucket:
             if p == palabra:
-                bucket[i] = (p, freq + 1)
-                return
+                # Si la palabra ya existe, detenemos la inserción (elimina repetidos)
+                return 
         
-        bucket.append((palabra, 1))
-
-    # Nuevo método para consultar frecuencias fácilmente
-    def obtener_frecuencia(self, palabra):
-        indice = self._hash(palabra)
-        for p, freq in self.buckets[indice]:
-            if p == palabra:
-                return freq
-        return 0
+        # Si no existe en el bucket, la agregamos
+        bucket.append(palabra)
 
     def obtener_solo_palabras(self):
         resultado = []
         for bucket in self.buckets:
-            for p, freq in bucket:
+            for p in bucket:
                 resultado.append(p)
         return resultado
 
@@ -137,7 +132,37 @@ def quick_sort(lista):
     return quick_sort(menores)+iguales+quick_sort(mayores)
 
 # 4. Conteo de Frecuencia.
+class TablaFrecuencias(TablaHashBase):
+    def insertar(self, palabra):
+        # Sobrescribimos el método insertar para guardar tuplas de (palabra, frecuencia)
+        indice = self._hash(palabra)
+        bucket = self.buckets[indice]
 
+        for i, tupla in enumerate(bucket):
+            p, freq = tupla
+            if p == palabra:
+                # Si ya existe, actualizamos su frecuencia sumando 1
+                bucket[i] = (p, freq + 1)
+                return
+        
+        # Si es una palabra nueva, la agregamos con frecuencia inicial de 1
+        bucket.append((palabra, 1))
+
+    def obtener_solo_palabras(self):
+        # Sobrescribimos el método para extraer solo el texto de las tuplas
+        resultado = []
+        for bucket in self.buckets:
+            for p, freq in bucket:
+                resultado.append(p)
+        return resultado
+
+    def obtener_frecuencia(self, palabra):
+        # Método exclusivo para consultar cuántas veces apareció una palabra
+        indice = self._hash(palabra)
+        for p, freq in self.buckets[indice]:
+            if p == palabra:
+                return freq
+        return 0
 
 
 # 5. Comparación empírica.
