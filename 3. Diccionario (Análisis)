@@ -1,0 +1,55 @@
+# 6. Análisis de Complejidad
+
+En el análisis, n representa el número total de palabras que se van a procesar.
+## Tabla Hash (Elimina palabras repetidas)
+
+Para guardar solo las palabras únicas usamos una tabla hash que sirve para calcular directamente en que lugar debe de ir la palabra en lugar de comparar cada palabra nueva con las que ya guradamos.
+
+* **Mejor caso.-** $O(n)$ en total $O(1)$ por palabra.  
+  Este caso ocurre cuando las palabras se reparten bien entre todas las posiciones y casi no hay palabras distintas que caigan en la misma posición.
+
+  Para cada palabra se hacen los siguientes pasos:
+  1. Calcular su posición hash: $O(1)$
+  2. Buscar en su posición: $O(1)$
+  3. Guardarla si no existía: $O(1)$
+
+  Al hacer este proceso para las n palabras del texto tenemos:  
+  $n * O(1) = O(n)$
+
+* **Peor caso.-** $O(n^2)$ en total $O(n)$ por palabra.  
+  Ocurre si hay muchas palabras que caen en la misma posición, y en el caso extremo en el que todas las palabras terminen cayendo en el mismo casillero. En este caso la tabla se convierte en una lista larga, para saber si una palabra nueva ya existe se tiene que comparar con las anteriores, haciendo que las comparaciones aumenten:  
+  $1 + 2 + 3 + ... + n = n(n+1)/2 = O(n^2)$
+
+---
+
+## Merge Sort
+
+Merge Sort ordena las palabras con la estrategia "divide y vencerás", es decir, parte la lista a la mitad una y otra vez hasta quedarse con elementos individuales y luegos los vuelve a juntar en orden alfabético.
+
+Como la lista se divide entre 2 cada paso, la cantidad de veces que podemos dividirla es aproximadamente $\log_2(n)$ niveles.
+
+En cada uno de esos niveles el algoritmo revisa las n palabras para combinarlas en orden, lo cuál le toma tiempo $O(n)$.
+
+Entonces, multiplicando el tranajo de cada nivel por el número de niveles tenemos: $O(n) * O(\log n) = O(n \log n)$
+
+* **Mejor caso.-** $O(n \log n)$.  
+  Aunque el texto ya venga ordenado alfabéticamente Merge Sort hace el mismo proceso de división y combinación.
+
+* **Peor caso.-** $O(n \log n)$.  
+  En este caso el algoritmo siempre se tarda lo mismo, sin importar que tan desordenadas estén las palabras al inicio.
+
+---
+
+## Quick Sort
+
+Quick Sort elige una palabra como pivote y separa la lista en dos partes, las palabras menores al pivote van a la izquierda y las mayores a la derecha; luego repite este mismo proceso con cada parte.
+
+* **Mejor caso.-** $O(n \log n)$.  
+  Este caso ocurre cuando el pivote divide la lista en dos partes casi iguales, esto genera cerca de $\log_2(n)$ niveles de división; como en cada nivel se procesan las n palabras tenemos:  
+  $O(n) + O(\log n) = O(n \log n)$
+
+* **Peor caso.-** $O(n^2)$.  
+  Este caso ocurre si elegimos un mal pivote de forma continua, podría pasar si la lista ya está ordenada y siempre elegimos el primer o el último elemento.
+
+  En este caso en lugar de dividir la lista a la mitad solo le quitamos un elemento a la vez (1 elemento por un lado y n-1 elementos por el otro); esto genera n niveles de división en lugar de log n, haciendo que se vea de la siguiente manera:  
+  $n + (n-1) + (n-2) + ... + 1 = O(n^2)$
