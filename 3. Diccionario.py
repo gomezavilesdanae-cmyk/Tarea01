@@ -1,6 +1,7 @@
 # 3. Diccionario
-# 1. Normalización de texto: Limpiar el texto de entrada.
 
+
+# 1. Normalización de texto: Limpiar el texto de entrada.
 # Creamos la clase excepción por si ingresan un texto vacío
 class TextoVacioError(Exception):
     def __init__(self, mensaje="El texto está vacío."):
@@ -47,6 +48,8 @@ class NormalizadorTexto:
 
         # Regresamos el texto quitando los espacios sobrantes
         return texto_limpio.strip()
+
+
 # 2. Eliminación de repetidos con tabla hash propia y 4. Conteo de frecuencia
 class TablaHashDiccionario:
     def __init__(self, tamano=100):
