@@ -47,6 +47,42 @@ class NormalizadorTexto:
 
         # Regresamos el texto quitando los espacios sobrantes
         return texto_limpio.strip()
+# 2. Eliminación de repetidos con tabla hash propia y 4. Conteo de frecuencia
+class TablaHashDiccionario:
+    def __init__(self, tamano=100):
+        self.tamano = tamano
+        # Buckets (listas) para manejar colisiones por encadenamiento
+        self.buckets = [[] for _ in range(self.tamano)]
+
+    def _hash(self, palabra):
+        suma = sum(ord(c) for c in palabra)
+        return suma % self.tamano
+
+    def insertar(self, palabra):
+        indice = self._hash(palabra)
+        bucket = self.buckets[indice]
+
+        for i, (p, freq) in enumerate(bucket):
+            if p == palabra:
+                bucket[i] = (p, freq + 1)
+                return
+        
+        bucket.append((palabra, 1))
+
+    # Nuevo método para consultar frecuencias fácilmente
+    def obtener_frecuencia(self, palabra):
+        indice = self._hash(palabra)
+        for p, freq in self.buckets[indice]:
+            if p == palabra:
+                return freq
+        return 0
+
+    def obtener_solo_palabras(self):
+        resultado = []
+        for bucket in self.buckets:
+            for p, freq in bucket:
+                resultado.append(p)
+        return resultado
 
 def merge_sort(lista):
     if len(lista)<=1:
